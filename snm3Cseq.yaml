@@ -1,14 +1,14 @@
 !Assay
 seqspec_version: 0.0.0
-assay: 'snmCT-seq'
+assay: 'sn-m3C-seq'
 sequencer: 'Illumina NextSeq500'
-name: snmCT-seq
-doi: 'https://doi.org/10.1016/j.xgen.2022.100107'
-publication_date: '09 March 2022'
-description: 'Single-nucleus methylcytosine and transcriptome sequencing (snmCT-seq). Specification assumes 2x151bp paired-end reads with 10bp dual indices based on snmC-seq3 and SMART-seq2. Bisulfite-converted gDNA reads (methyl) and cDNA reads (RNA) are separated in silico.'
+name: sn-m3C-seq
+doi: 'https://doi.org/10.1038/s41592-019-0547-z'
+publication_date: '09 September 2019'
+description: 'Single-nucleus methyl-3C sequencing (sn-m3C-seq). Specification assumes 2x151bp paired-end reads with 10bp dual indices based on snmC-seq3 and chromatin confirmation capture. Note that all reads are simultaneously bisulfite-converted gDNA containing potential 3C ligation junctions.'
 modalities:
 - methyl
-- rna
+- hic
 lib_struct: ''
 assay_spec:
 - !Region
@@ -36,7 +36,7 @@ assay_spec:
   - !Region
     parent_id: methyl
     region_id: I2.fastq.gz
-    region_type: 'I2.fastq.gz'
+    region_type: 'fastq'
     name: I2.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNN'
@@ -47,7 +47,7 @@ assay_spec:
     - !Region
       parent_id: I2.fastq.gz
       region_id: i5_barcode
-      region_type: 'i5_barcode'
+      region_type: 'index5'
       name: i5_barcode
       sequence_type: 'onlist'
       sequence: 'NNNNNNNNNNN'
@@ -55,7 +55,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i5_onlist.txt
-        md5: a0aa9b1754c4b7950816dc212a081d14
+        md5: 4f15e5aea0ea639b94a3ede217701ad3
       regions: null
   - !Region
     parent_id: methyl
@@ -71,7 +71,7 @@ assay_spec:
   - !Region
     parent_id: methyl
     region_id: R1.fastq.gz
-    region_type: 'R1.fastq.gz'
+    region_type: 'fastq'
     name: R1.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNNNNNNNX'
@@ -88,9 +88,9 @@ assay_spec:
       sequence: 'NNNNNNNN'
       min_len: 8
       max_len: 8
-      onlist:
+      onlist: !Onlist
         filename: cb_onlist.txt
-        md5: df0aa7d170263a7435cd1074ac69b89a
+        md5: 7e6ed04858ac08c8b7e24e46ee054791
       regions:
     - !Region
       parent_id: R1.fastq.gz
@@ -117,7 +117,7 @@ assay_spec:
   - !Region
     parent_id: methyl
     region_id: R2.fastq.gz
-    region_type: 'R2.fastq.gz'
+    region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
     sequence: 'NX'
@@ -128,7 +128,7 @@ assay_spec:
     - !Region
       parent_id: R2.fastq.gz
       region_id: bisulfite_gDNA-2
-      region_type: 'random'
+      region_type: 'methyl'
       name: methyl
       sequence_type: 'random'
       sequence: 'X'
@@ -161,7 +161,7 @@ assay_spec:
   - !Region
     parent_id: null
     region_id: I1.fastq.gz
-    region_type: 'barcode'
+    region_type: 'fastq'
     name: I1.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNN'
@@ -180,7 +180,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i7_onlist.txt
-        md5: 7bf9d57e65e6f74cfc6f4b10f4b679fc
+        md5: d21cac93bee474f5113020c0d8f71c3b
       regions: null
   - !Region
     parent_id: methyl
@@ -195,9 +195,9 @@ assay_spec:
     regions: null
 - !Region
   parent_id: null
-  region_id: rna
-  region_type: 'rna'
-  name: rna
+  region_id: hic
+  region_type: 'hic'
+  name: hic
   sequence_type: 'joined'
   sequence: 'AATGATACGGCGACCACCGAGATCTACACNNNNNNNNNNNNACACTCTTTCCCTACACGACGCTCTTCCGATCTNNNNNNNNNNNNNNNNN'
   min_len: 89
@@ -205,7 +205,7 @@ assay_spec:
   onlist: null
   regions:
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: illumina_p5
     region_type: 'illumina_p5'
     name: illumina_p5
@@ -216,9 +216,9 @@ assay_spec:
     onlist: null
     regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: I2.fastq.gz
-    region_type: 'I2.fastq.gz'
+    region_type: 'fastq'
     name: I2.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNN'
@@ -227,9 +227,9 @@ assay_spec:
     onlist: null
     regions:
     - !Region
-      parent_id: rna
+      parent_id: hic
       region_id: i5_barcode
-      region_type: 'i5_barcode'
+      region_type: 'index5'
       name: i5_barcode
       sequence_type: 'onlist'
       sequence: 'NNNNNNNNNNN'
@@ -237,10 +237,10 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i5_onlist.txt
-        md5: a0aa9b1754c4b7950816dc212a081d14
+        md5: 4f15e5aea0ea639b94a3ede217701ad3
       regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: truseq_read1
     region_type: 'truseq_read1'
     name: truseq_read1
@@ -251,9 +251,9 @@ assay_spec:
     onlist: null
     regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: R1.fastq.gz
-    region_type: 'R1.fastq.gz'
+    region_type: 'fastq'
     name: R1.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNNNNNNNX'
@@ -270,14 +270,14 @@ assay_spec:
       sequence: 'NNNNNNNN'
       min_len: 8
       max_len: 8
-      onlist:
+      onlist: !Onlist
         filename: cb_onlist.txt
-        md5: df0aa7d170263a7435cd1074ac69b89a
+        md5: 10a4583b09d8c97bd5b1c6fd30be3aa0
       regions:
     - !Region
       parent_id: R1.fastq.gz
       region_id: primer9H
-      region_type: 'rna'
+      region_type: 'hic'
       name: linker
       sequence_type: 'random'
       sequence: 'NNNNNNNNN'
@@ -287,9 +287,9 @@ assay_spec:
       regions: null
     - !Region
       parent_id: R1.fastq.gz
-      region_id: transcriptome-1
-      region_type: 'rna'
-      name: rna
+      region_id: chromcontact-1
+      region_type: 'hic'
+      name: hic
       sequence_type: 'random'
       sequence: 'X'
       min_len: 1
@@ -297,9 +297,9 @@ assay_spec:
       onlist: null
       regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: R2.fastq.gz
-    region_type: 'R2.fastq.gz'
+    region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
     sequence: 'NX'
@@ -309,9 +309,9 @@ assay_spec:
     regions:
     - !Region
       parent_id: R2.fastq.gz
-      region_id: transcriptome-2
-      region_type: 'random'
-      name: rna
+      region_id: chromcontact-2
+      region_type: 'hic'
+      name: hic
       sequence_type: 'random'
       sequence: 'X'
       min_len: 1
@@ -330,7 +330,7 @@ assay_spec:
       onlist: null
       regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: truseq_read2
     region_type: 'truseq_read2'
     name: truseq_read2
@@ -341,9 +341,9 @@ assay_spec:
     onlist: null
     regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: I1.fastq.gz
-    region_type: 'barcode'
+    region_type: 'fastq'
     name: I1.fastq.gz
     sequence_type: 'joined'
     sequence: 'NNNNNNNNNNNN'
@@ -362,10 +362,10 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i7_onlist.txt
-        md5: 7bf9d57e65e6f74cfc6f4b10f4b679fc
+        md5: d21cac93bee474f5113020c0d8f71c3b
       regions: null
   - !Region
-    parent_id: rna
+    parent_id: hic
     region_id: illumina_p7
     region_type: 'illumina_p7'
     name: illumina_p7
