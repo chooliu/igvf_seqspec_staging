@@ -1,9 +1,9 @@
 # small R script showing how onlists were obtained =============================
 
-setwd("/Users/choo/Documents/GitHub/igvf_seqspec_staging/")
 
 library(tidyverse)
 library(tools)
+library(R.utils)
 
 sessionInfo()
 
@@ -54,10 +54,11 @@ valid_i5i7 <-
 write_lines(valid_i5i7$i7, "i7_onlist.txt")
 write_lines(valid_i5i7$i5, "i5_onlist.txt")
 
+gzip("i5_onlist.txt")
+gzip("i7_onlist.txt")
 
-
-md5sum("i5_onlist.txt") # 4f15e5aea0ea639b94a3ede217701ad3
-md5sum("i7_onlist.txt") # d21cac93bee474f5113020c0d8f71c3b
+md5sum("i5_onlist.txt.gz")  # c36c18a6ee1603758767878b794335f1
+md5sum("i7_onlist.txt.gz") # 47874d94562f3b00125385a6c60daf9d
 
 
 
@@ -68,31 +69,45 @@ md5sum("i7_onlist.txt") # d21cac93bee474f5113020c0d8f71c3b
 # 8bp cell barcodes: or more technically, well-IDs
 # these identify the well of the 384-well plate in the assay
 # if desired, can be used to check for technical artifacts by position
-set1 <- read_lines("../snmCTseq_Pipeline/Scripts/A02a_cellbarcodes_subset1.fa")
-set2 <- read_lines("../snmCTseq_Pipeline/Scripts/A02a_cellbarcodes_subset2.fa")
+set1 <- read_lines("A02a_cellbarcodes_subset1.fa")
+set2 <- read_lines("A02a_cellbarcodes_subset2.fa")
 
 # format valid cell barcodes into single sequence
 # arranged in order A01, A02, ..., P23, P24
 # source: https://github.com/chooliu/snmCTseq_Pipeline --> Scripts/
-tibble(
-  seq = set1[c(F, T)] %>% gsub("\\^", "", .),
-  well = set1[c(T, F)] %>% gsub(">", "", .)
-) %>%
-  bind_rows(
-    tibble(
-      seq = set2[c(F, T)] %>% gsub("\\^", "", .),
-      well = set2[c(T, F)] %>% gsub(">", "", .)
-    )
-  ) %>%
-  mutate(
-    row = str_sub(well, 0, 1),
-    col = str_sub(well, 2, 3) %>% str_pad(., width = 2, side = "left", pad = "0")
-  ) %>%
+tibble(seq = set1[c(F, T)] %>% gsub("\\^", "", .),
+       well = set1[c(T, F)] %>% gsub(">", "", .)) %>%
+bind_rows(
+  tibble(seq = set2[c(F, T)] %>% gsub("\\^", "", .),
+       well = set2[c(T, F)] %>% gsub(">", "", .))) %>%
+  mutate(row = str_sub(well, 0, 1),
+         col = str_sub(well, 2, 3) %>% str_pad(., width = 2, side = "left", pad = "0")) %>%
   arrange(row, col) %>%
-  .$seq %>%
-  unlist() %>%
+  .$seq %>% unlist %>%
   write_lines("cb_onlist.txt")
 
 
 
-md5sum("cb_onlist.txt") # 10a4583b09d8c97bd5b1c6fd30be3aa0
+
+gzip("cb_onlist.txt")
+
+md5sum("cb_onlist.txt.gz") # 0691bed03feb775d9aff8b37fb4dc94b
+
+
+
+
+
+# fastq extract
+gunzip -c /u/project/cluo/Shared_Datasets/source_fastq/yzcl37/goldstein/20230320-3m-4b-PD-C01_S25_L004_R1_001.fastq.gz \
+  | head -4000000 | gzip > $HOME/R1_m3C.fastq.gz
+gunzip -c /u/project/cluo/Shared_Datasets/source_fastq/yzcl37/goldstein/20230320-3m-4b-PD-C01_S25_L004_R2_001.fastq.gz \
+  | head -4000000 | gzip > $HOME/R2_m3C.fastq.gz
+
+
+# fastq extract
+gunzip -c /u/project/cluo/Shared_Datasets/source_fastq/yzcl36/yang/20230125-Yang-KO-WT-M-C5-P1-C04_S28_L001_R1_001.fastq.gz \
+  | head -4000000 | gzip > $HOME/R1_mCT.fastq.gz
+gunzip -c /u/project/cluo/Shared_Datasets/source_fastq/yzcl36/yang/20230125-Yang-KO-WT-M-C5-P1-C04_S28_L001_R2_001.fastq.gz \
+  | head -4000000 | gzip > $HOME/R2_mCT.fastq.gz
+
+
