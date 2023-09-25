@@ -55,7 +55,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i5_onlist.txt
-        md5: a0aa9b1754c4b7950816dc212a081d14
+        md5: 4f15e5aea0ea639b94a3ede217701ad3
       regions: null
   - !Region
     parent_id: methyl
@@ -90,7 +90,7 @@ assay_spec:
       max_len: 8
       onlist: !Onlist
         filename: cb_onlist.txt
-        md5: 7e6ed04858ac08c8b7e24e46ee054791
+        md5: 10a4583b09d8c97bd5b1c6fd30be3aa0
       regions:
     - !Region
       parent_id: R1.fastq.gz
@@ -120,7 +120,7 @@ assay_spec:
     region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
-    sequence: 'NX'
+    sequence: 'YX'
     min_len: 151
     max_len: 151
     onlist: null
@@ -180,7 +180,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i7_onlist.txt
-        md5: 7bf9d57e65e6f74cfc6f4b10f4b679fc
+        md5: d21cac93bee474f5113020c0d8f71c3b
       regions: null
   - !Region
     parent_id: methyl
@@ -237,7 +237,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i5_onlist.txt
-        md5: a0aa9b1754c4b7950816dc212a081d14
+        md5: 4f15e5aea0ea639b94a3ede217701ad3
       regions: null
   - !Region
     parent_id: rna
@@ -272,7 +272,7 @@ assay_spec:
       max_len: 8
       onlist: !Onlist
         filename: cb_onlist.txt
-        md5: df0aa7d170263a7435cd1074ac69b89a
+        md5: 10a4583b09d8c97bd5b1c6fd30be3aa0
       regions:
     - !Region
       parent_id: R1.fastq.gz
@@ -302,7 +302,7 @@ assay_spec:
     region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
-    sequence: 'NX'
+    sequence: 'YX'
     min_len: 151
     max_len: 151
     onlist: null
@@ -362,7 +362,7 @@ assay_spec:
       max_len: 10
       onlist: !Onlist
         filename: i7_onlist.txt
-        md5: 7bf9d57e65e6f74cfc6f4b10f4b679fc
+        md5: d21cac93bee474f5113020c0d8f71c3b
       regions: null
   - !Region
     parent_id: rna

@@ -1,5 +1,6 @@
 # small R script showing how onlists were obtained =============================
 
+setwd("/Users/choo/Documents/GitHub/igvf_seqspec_staging/")
 
 library(tidyverse)
 library(tools)
@@ -55,7 +56,7 @@ write_lines(valid_i5i7$i5, "i5_onlist.txt")
 
 
 
-md5sum("i5_onlist.txt")  # 4f15e5aea0ea639b94a3ede217701ad3
+md5sum("i5_onlist.txt") # 4f15e5aea0ea639b94a3ede217701ad3
 md5sum("i7_onlist.txt") # d21cac93bee474f5113020c0d8f71c3b
 
 
@@ -67,28 +68,31 @@ md5sum("i7_onlist.txt") # d21cac93bee474f5113020c0d8f71c3b
 # 8bp cell barcodes: or more technically, well-IDs
 # these identify the well of the 384-well plate in the assay
 # if desired, can be used to check for technical artifacts by position
-set1 <- read_lines("A02a_cellbarcodes_subset1.fa")
-set2 <- read_lines("A02a_cellbarcodes_subset2.fa")
+set1 <- read_lines("../snmCTseq_Pipeline/Scripts/A02a_cellbarcodes_subset1.fa")
+set2 <- read_lines("../snmCTseq_Pipeline/Scripts/A02a_cellbarcodes_subset2.fa")
 
 # format valid cell barcodes into single sequence
 # arranged in order A01, A02, ..., P23, P24
 # source: https://github.com/chooliu/snmCTseq_Pipeline --> Scripts/
-tibble(seq = set1[c(F, T)] %>% gsub("\\^", "", .),
-       well = set1[c(T, F)] %>% gsub(">", "", .)) %>%
-bind_rows(
-  tibble(seq = set2[c(F, T)] %>% gsub("\\^", "", .),
-       well = set2[c(T, F)] %>% gsub(">", "", .))) %>%
-  mutate(row = str_sub(well, 0, 1),
-         col = str_sub(well, 2, 3) %>% str_pad(., width = 2, side = "left", pad = "0")) %>%
+tibble(
+  seq = set1[c(F, T)] %>% gsub("\\^", "", .),
+  well = set1[c(T, F)] %>% gsub(">", "", .)
+) %>%
+  bind_rows(
+    tibble(
+      seq = set2[c(F, T)] %>% gsub("\\^", "", .),
+      well = set2[c(T, F)] %>% gsub(">", "", .)
+    )
+  ) %>%
+  mutate(
+    row = str_sub(well, 0, 1),
+    col = str_sub(well, 2, 3) %>% str_pad(., width = 2, side = "left", pad = "0")
+  ) %>%
   arrange(row, col) %>%
-  .$seq %>% unlist %>%
+  .$seq %>%
+  unlist() %>%
   write_lines("cb_onlist.txt")
 
 
 
-
 md5sum("cb_onlist.txt") # 10a4583b09d8c97bd5b1c6fd30be3aa0
-
-
-
-

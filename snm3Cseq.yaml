@@ -90,7 +90,7 @@ assay_spec:
       max_len: 8
       onlist: !Onlist
         filename: cb_onlist.txt
-        md5: 7e6ed04858ac08c8b7e24e46ee054791
+        md5: 10a4583b09d8c97bd5b1c6fd30be3aa0
       regions:
     - !Region
       parent_id: R1.fastq.gz
@@ -120,7 +120,7 @@ assay_spec:
     region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
-    sequence: 'NX'
+    sequence: 'YX'
     min_len: 151
     max_len: 151
     onlist: null
@@ -302,7 +302,7 @@ assay_spec:
     region_type: 'fastq'
     name: R2.fastq.gz
     sequence_type: 'joined'
-    sequence: 'NX'
+    sequence: 'YX'
     min_len: 151
     max_len: 151
     onlist: null
